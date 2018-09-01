@@ -62,7 +62,7 @@ bool Plane::auto_takeoff_check(void)
     if (!quadplane.is_tailsitter()) {
         // Check aircraft attitude for bad launch
         // CHANGED BY ME
-        if (ahrs.pitch_sensor <= -6000 ||
+        if (ahrs.pitch_sensor <= -7500 ||
             ahrs.pitch_sensor >= 6000 ||
             (!fly_inverted() && labs(ahrs.roll_sensor) > 4500)) {
             gcs().send_text(MAV_SEVERITY_WARNING, "Bad launch AUTO");
