@@ -16,7 +16,8 @@ bool Plane::auto_takeoff_check(void)
     uint16_t wait_time_ms = MIN(uint16_t(g.takeoff_throttle_delay)*100,12700);
 
     // Reset states if process has been interrupted
-    if (takeoff_state.last_check_ms && (now - takeoff_state.last_check_ms) > 200) {
+    // CHANGED BY ME
+    if (takeoff_state.last_check_ms && (now - takeoff_state.last_check_ms) > 1200) {
 	    takeoff_state.launchTimerStarted = false;
 	    takeoff_state.last_tkoff_arm_time = 0;
         takeoff_state.last_check_ms = now;
@@ -60,9 +61,10 @@ bool Plane::auto_takeoff_check(void)
 
     if (!quadplane.is_tailsitter()) {
         // Check aircraft attitude for bad launch
-        if (ahrs.pitch_sensor <= -3000 ||
-            ahrs.pitch_sensor >= 4500 ||
-            (!fly_inverted() && labs(ahrs.roll_sensor) > 3000)) {
+        // CHANGED BY ME
+        if (ahrs.pitch_sensor <= -6000 ||
+            ahrs.pitch_sensor >= 6000 ||
+            (!fly_inverted() && labs(ahrs.roll_sensor) > 4500)) {
             gcs().send_text(MAV_SEVERITY_WARNING, "Bad launch AUTO");
             goto no_launch;
         }
